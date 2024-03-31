@@ -1,0 +1,54 @@
+close all;
+clear;
+Defining symbols required to define the system
+g = sym('g');
+m1 = sym('m1');
+m2 = sym('m2');
+l1 = sym('l1');
+l2 = sym('l2');
+M = sym('M');
+Defining system matrices
+A = [0 1 0 0 0 0;
+    0 0 ((-g*m1)/M) 0 ((-g*m2)/M) 0;
+    0 0 0 1 0 0;
+    0 0 ((-g*(M+m1))/(M*l1)) 0 -((g*m2)/(M*l1)) 0;
+    0 0 0 0 0 1;
+    0 0 ((-g*m1)/(M*l2)) 0 ((-g*(M+m2))/(M*l2)) 0 ];
+
+B = [0;
+    (1/M);
+    0;
+    (1/(M*l1));
+    0;
+    (1/(M*l2))];
+Determining Controllability Matrix
+AB = A*B;
+A2B = (A^2)*B;
+A3B = (A^3)*B;
+A4B = (A^4)*B;
+A5B = (A^5)*B;
+
+Ac = [B AB A2B A3B A4B A5B] ;
+Ac_dup = [B AB A2B A3B A4B A5B] ;
+disp("Controllability Matrix is: ");
+disp(Ac);
+
+det_Ac = simplify(det(Ac));
+disp("Determinant of Controllability Matrix: ");
+disp(det_Ac);
+
+disp("Rank of Controllability Matrix: ");
+rank_Ac = rank(Ac);
+disp(rank_Ac);
+Ac_new = subs(Ac_dup,l1,l2);
+disp("New controllability matrix is: ");
+disp(Ac_new);
+Condition for which the system is not stable i.e., the Controllability matrix does not have full rank
+det_Acnew = simplify(det(Ac_new));
+disp("Determinant of Controllability Matrix when l1=l2: ")
+disp(det_Acnew);
+
+rank_Acnew = rank(Ac_new);
+disp("Rank of Controllability Matrix when l1=l2: ")
+disp(rank_Acnew);
+As can be observed, when l1=l2, the rank of the Controllability Matrix is 4, and hence the system is not controllable.
