@@ -1,4 +1,4 @@
-#Design of LQR and LQG Controller for an inverted dual-pendulum crane
+# Design of LQR and LQG Controller for an inverted dual-pendulum crane
 
 ## Overview
 
